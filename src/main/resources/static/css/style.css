@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* Conteneur principal */
+.container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Section du formulaire */
+.form-container {
+    width: 40%;  /* Formulaire prend 50% de la largeur */
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Titre du formulaire */
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Champ de formulaire */
+.inputbox {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%; /* Assure que l'input prend toute la largeur disponible */
+}
+
+.inputbox input {
+    width: 100%;
+    padding: 10px;
+    padding-left: 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.inputbox ion-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.inputbox label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Bouton de soumission */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #53228d;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #5e3a8a;
+}
+
+/* Lien Forget Password et Register */
+.register p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register a {
+    color: #d045d6;
+    text-decoration: none;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+/* Section de l'image */
+.image-container {
+    width: 25%;  /* L'image prend aussi 50% de la largeur */
+    background-image: url('https://i.pinimg.com/736x/f3/89/fe/f389feedcc83b318b0cf8623d2aa1fab.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 50%;  /* Hauteur de l'image égale à celle de la fenêtre */
+    border-radius: 10px;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Passe les éléments en colonne sur les petits écrans */
+    }
+
+    .form-container, .image-container {
+        width: 100%; /* Formulaire et image prennent toute la largeur sur petit écran */
+        margin-bottom: 20px;
+    }
+}

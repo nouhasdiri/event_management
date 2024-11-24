@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Conteneur principal */
+        .container {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Section du formulaire */
+        .form-container {
+            width: 40%;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Titre du formulaire */
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Champ de formulaire */
+        .inputbox {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .inputbox input, .inputbox select {
+            width: 100%;
+            padding: 10px;
+            padding-left: 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .inputbox ion-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .inputbox label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Bouton de soumission */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #53228d;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #5e3a8a;
+        }
+
+        /* Section de l'image */
+        .image-container {
+            width: 25%;
+            background-image: url('https://i.pinimg.com/736x/22/43/b2/2243b20516a19d9be2e155b344e965be.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 50%;
+            border-radius: 10px;
+        }
+        .form-container p{
+            text-align: center;
+            margin-top: 20px;
+        }
+        a {
+            color: #d045d6;
+            text-decoration: none;
+        }
+
+        /* Responsiveness */
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .form-container, .image-container {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .image-container {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Section de formulaire -->
+    <div class="form-container">
+        <form action="/req/signup" method="post">
+            <h1>Registration</h1>
+            <div class="inputbox">
+                <input type="text" id="username" name="username" placeholder="username" required>
+            </div>
+            <div class="inputbox">
+                <input type="email" id="email" name="email" placeholder="email" required>
+            </div>
+            <div class="inputbox">
+                <input type="password" id="password" name="password" placeholder="password" required>
+            </div>
+            <div class="inputbox">
+                <select id="role" name="role" required>
+                    <option value="" disabled selected hidden>--Add role--</option>
+                    <option value="ROLE_ORGANISATEUR">Organizer</option>
+                    <option value="ROLE_PARTICIPANT">Participant</option>
+                </select>
+            </div>
+            <button type="submit">S'inscrire</button>
+        </form>
+        <p>Already have an account! <a href="req/login">Login</a></p>
+    </div>
+
+    <!-- Section d'image -->
+    <div class="image-container"></div>
+</div>
+</body>
+</html>

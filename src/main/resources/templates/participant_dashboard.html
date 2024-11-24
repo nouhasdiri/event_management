@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events List</title>
+    <style>
+        /* Styles pour organiser les blocs */
+        .event-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .event-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+        .event-card h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .event-card p {
+            margin: 5px 0;
+            font-size: 0.95em;
+            color: #555;
+        }
+        .event-card .event-date {
+            font-weight: bold;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+<h1>Events</h1>
+
+<!-- Si la liste des événements est vide -->
+<div th:if="${events.size() == 0}">
+    <p>No events available.</p>
+</div>
+
+<!-- Conteneur des événements -->
+<div class="event-container" th:if="${events.size() > 0}">
+    <!-- Boucle pour chaque événement -->
+    <div class="event-card" th:each="event : ${events}">
+        <h2 th:text="${event.eventName}">Event Name</h2>
+        <p><strong>Description:</strong> <span th:text="${event.description}">Event Description</span></p>
+        <p><strong>Location:</strong> <span th:text="${event.location}">Event Location</span></p>
+        <p><strong>Date:</strong> <span th:text="${#dates.format(event.date, 'yyyy-MM-dd HH:mm')}" class="event-date">Event Date</span></p>
+        <p><strong>Duration:</strong> <span th:text="${event.duration}">Event Duration</span></p>
+        <p><strong>Category:</strong> <span th:text="${event.category}">Event Category</span></p>
+        <p><strong>Available Places:</strong> <span th:text="${event.places}">Event Places</span></p>
+        <p><strong>Organizer:</strong> <span th:text="${event.organizer.username}">Organizer Name</span></p>
+        <p><strong>Participants:</strong></p>
+        <ul>
+            <li th:each="participant : ${event.participants}" th:text="${participant.email}">participant</li>
+        </ul>
+        <form action="/participate" method="post">
+            <input type="number" id="id_event" name="id_event" th:value="${event.id}" hidden readonly >
+            <button type="submit">Participate</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

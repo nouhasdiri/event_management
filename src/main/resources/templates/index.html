@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        /* Styles pour le fond */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://i.pinimg.com/control2/736x/6b/1a/d0/6b1ad0e9ed79598c4543115681156987.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(21,8,31, 0.5);
+            padding: 15px 30px; /* Ajout d'un padding de 30px à gauche et à droite */
+            display: flex;
+            gap: 1080px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Logo en texte */
+        .logo {
+            font-size: 2rem; /* Taille du texte du logo */
+            font-weight: bold;
+            color: #ff00ff; /* Couleur du texte du logo */
+            font-family: "Poppins", sans-serif;
+            letter-spacing: 2px; /* Espacement entre les lettres */
+        }
+
+        span{
+            font-size: 2rem;
+            color: white;
+            font-family: "Arabic Typesetting", sans-serif;
+        }
+
+        /* Liens de la navbar */
+        .navbar-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: #ff99ff;
+        }
+
+        /* Conteneur principal */
+        .container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 80%; /* Ajuste la largeur */
+            max-width: 600px; /* Limite la taille maximale */
+        }
+
+        /* Style pour le message */
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: normal;
+            font-family: 'Andalus', sans-serif; /* Nouvelle police */
+        }
+
+        /* Bouton */
+        .button {
+            display: inline-block;
+            padding: 10px 25px;
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+            background-color: #ff00ff;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #ff99ff;
+            transform: scale(1.05);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Importation de la police Roboto -->
+</head>
+<body>
+<!-- Navbar -->
+<nav>
+    <div class="logo">
+        <!-- Logo sous forme de texte -->
+        Connect<span>Now</span>
+    </div>
+    <div class="navbar-links">
+        <a href="/req/login">Login</a>
+        <a href="/req/signup">Register</a>
+    </div>
+</nav>
+
+<!-- Contenu principal -->
+<div class="container">
+    <p>Join us and explore amazing events that will inspire and connect you. Don't miss out on the opportunity to be part of a community that shares your passions.</p>
+    <a href="/req/login" class="button">Explore Events ✨</a>
+</div>
+</body>
+</html>

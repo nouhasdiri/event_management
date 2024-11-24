@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <!-- Section de formulaire -->
+    <div class="form-container">
+        <form action="/req/login" method="post">
+            <h1>Login</h1>
+            <div class="dialog-row">
+                <label th:if="${param.error}" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-center redText"></label>
+            </div>
+            <div class="inputbox">
+                <ion-icon name="email-outline"></ion-icon>
+                <input name="username" id="username" type="text" placeholder="username" required>
+            </div>
+            <div class="inputbox">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input name="password" type="password" id="password" placeholder="password" required>
+            </div>
+            <div class="register">
+                <p><a href="/req/signup">Forget Password ?</a></p>
+            </div>
+            <button type="submit">Log in</button>
+            <div class="register">
+                <p>Don't have an account? <a href="/req/signup">Register!</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Section d'image -->
+    <div class="image-container"></div>
+</div>
+</body>
+</html>
