@@ -6,9 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "event")
@@ -37,6 +35,6 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"), // Colonne pour `Event`
             inverseJoinColumns = @JoinColumn(name = "user_id") // Colonne pour `UserApp`
     )
-    private Set<UserApp> participants = new HashSet<>();
+    private List<UserApp> participants = new ArrayList<>();
 
 }

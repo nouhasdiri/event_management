@@ -57,7 +57,7 @@
                 <p><strong>Places:</strong> <span th:text="${event.places}">Places</span></p>
                 <p><strong>Participants:</strong></p>
                 <ul>
-                    <li th:each="participant : ${event.participants}" th:text="${participant.email}">participant</li>
+                    <li th:each="participant : ${event.participants}" th:text="${participant.username}">participant</li>
                 </ul>
 
                 </ul>

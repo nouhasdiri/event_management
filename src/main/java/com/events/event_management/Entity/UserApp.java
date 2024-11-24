@@ -33,5 +33,5 @@ public class UserApp {
     private List<Event> events_organize = new ArrayList<>();
 
     @ManyToMany(mappedBy = "participants")
-    private Set<Event> events_participate = new HashSet<>();
+    private List<Event> events_participate = new ArrayList<>();
 }

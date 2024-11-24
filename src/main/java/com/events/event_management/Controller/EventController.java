@@ -65,7 +65,7 @@ public class EventController {
 
     @GetMapping("/organizer_dashboard")
     public String organisateur(Model model){
-        System.out.println("organisateur");
+        System.out.println("nouhaila help");
         List<Event> events = eventService.findEventByOrganizer();
         // Log pour debug
         events.forEach(event -> {
