@@ -7,36 +7,190 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://i.pinimg.com/736x/5e/02/71/5e0271f304ab1ebed1d0762e698331fc.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(21,8,31, 0.5);
+            padding: 13px 30px; /* Ajout d'un padding de 30px à gauche et à droite */
+            display: flex;
+            gap: 1080px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Logo en texte */
+        .logo {
+            font-size: 2rem; /* Taille du texte du logo */
+            font-weight: bold;
+            color: #ff00ff; /* Couleur du texte du logo */
+            font-family: "Poppins", sans-serif;
+            letter-spacing: 2px; /* Espacement entre les lettres */
+        }
+
+        .logo span{
+            font-size: 2rem;
+            color: white;
+            font-family: "Arabic Typesetting", sans-serif;
+        }
+
+        /* Liens de la navbar */
+        .navbar-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: #ff99ff;
+        }
+
+        a{
+            text-decoration: none; /* Supprime le soulignement */
+            color: inherit;
+        }
+
+        .custom-heading {
+            margin-top: 50px;
+            font-family: 'Georgia', serif; /* Exemple de police avec empattements */
+            font-size: 2rem; /* Modifier la taille si nécessaire */
+            color: #ff00ff; /* Modifier la couleur */
+        }
+
+        .event-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 20px;
+        }
+
         .event-card {
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 20px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            width: 320px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .event-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
-        .event-date {
+        .event-card h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #343a40;
+        }
+        .event-card p {
+            margin: 8px 0;
+            font-size: 0.95em;
             color: #6c757d;
         }
+
+        .event-date {
+            font-weight: bold;
+            color: #007bff;
+        }
+
         .add-event-btn {
             margin-bottom: 30px;
+        }
+
+        #success-message {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 15px 20px;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            animation: fade-in-out 4s ease-in-out;
+        }
+
+        .star {
+            font-size: 30px; /* Taille plus grande */
+            color: #ccc;    /* Étoile vide (gris clair) */
+        }
+
+        .gold {
+            color: #ffd700; /* Couleur dorée pour les étoiles pleines */
+        }
+
+        .participants-list{
+            color: #007bff;
+        }
+
+        .title{
+            color: white;
+            font-size: 2rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .add-button{
+            background-color: #903bac;
+            color: white;
+        }
+        .add-button:hover{
+            background-color: #c468e3;
+            color: white;
+        }
+
+
+        @keyframes fade-in-out {
+            0% { opacity: 0; transform: translateY(20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
         }
     </style>
 </head>
 <body>
+
+<nav>
+    <div class="logo">
+        <a href="/">
+            Connect<span>Now</span>
+        </a>
+    </div>
+    <div class="navbar-links">
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Welcome, Organizer!</h1>
+    <h2 class="text-center mb-4 custom-heading">Hello <span th:text="${username}">username</span></h2>
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="/logout" class="btn btn-danger">Logout</a>
+        <h3 class="title mb-0">My Events</h3>
         <button type="button" class="btn btn-primary add-event-btn" data-bs-toggle="modal" data-bs-target="#addEventModal">
             Add Event
         </button>
     </div>
-
-    <h2 class="mb-4">My Events</h2>
 
     <!-- Error message if no events -->
     <div class="text-center" th:if="${events == null or events.size() == 0}">
@@ -44,28 +198,46 @@
     </div>
 
     <!-- Event cards container -->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" th:if="${events != null and events.size() > 0}">
+    <div class="event-container row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" th:if="${events != null and events.size() > 0}">
         <!-- Loop through each event -->
         <div class="col" th:each="event : ${events}">
-            <div class="event-card">
-                <h4 class="mb-3" th:text="${event.eventName}">Event Name</h4>
-                <p><strong>Description:</strong> <span th:text="${event.description}">Description</span></p>
-                <p><strong>Location:</strong> <span th:text="${event.location}">Location</span></p>
-                <p><strong>Date:</strong> <span th:text="${#dates.format(event.date, 'yyyy-MM-dd HH:mm')}" class="event-date">Date</span></p>
-                <p><strong>Duration:</strong> <span th:text="${event.duration}">Duration</span></p>
-                <p><strong>Category:</strong> <span th:text="${event.category}">Category</span></p>
-                <p><strong>Places:</strong> <span th:text="${event.places}">Places</span></p>
-                <p><strong>Participants:</strong></p>
-                <ul>
-                    <li th:each="participant : ${event.participants}" th:text="${participant.username}">participant</li>
-                </ul>
+            <div class="event-card d-flex justify-content-between align-items-start">
+                <div>
+                    <h2 class="mb-3" th:text="${event.eventName}">Event Name</h2>
+                    <p><strong>Description:</strong> <span th:text="${event.description}">Description</span></p>
+                    <p><strong>Location:</strong> <span th:text="${event.location}">Location</span></p>
+                    <p><strong>Date:</strong> <span th:text="${#dates.format(event.date, 'yyyy-MM-dd HH:mm')}" class="event-date">Date</span></p>
+                    <p><strong>Duration:</strong> <span th:text="${event.duration}">Duration</span></p>
+                    <p><strong>Category:</strong> <span th:text="${event.category}">Category</span></p>
+                    <p><strong>Places:</strong> <span th:text="${event.places}">Places</span></p>
+                    <p>
+                        <span>
+                           <span th:each="i : ${#numbers.sequence(1, 5)}">
+                               <span th:if="${i <= event.calculateAverageRating()}" class="star gold">&#9733;</span>
+                               <span th:unless="${i <= event.calculateAverageRating()}" class="star">&#9734;</span>
+                           </span>
+                        </span>
+                    </p>
 
-                </ul>
+
+                    <p><strong>Participants:</strong></p>
+                    <ul>
+                        <li class="participants-list" th:each="participant : ${event.participants}" th:text="${participant.username}">participant</li>
+                    </ul>
+                </div>
+                <form method="post" action="/delete-event" class="delete-event-form ms-3">
+                    <input name="id_event" type="number" th:value="${event.id}" hidden>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Success message -->
+<div id="success-message" class="alert alert-success mt-4">
+    Event deleted successfully!
+</div>
 
 <!-- Modal to add an event -->
 <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
@@ -111,7 +283,7 @@
                         <input type="number" id="places" name="places" class="form-control" min="1" required>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-success">Add Event</button>
+                        <button type="submit" class="btn add-button">Add Event</button>
                     </div>
                 </form>
             </div>
@@ -123,31 +295,54 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const showParticipantsButtons = document.querySelectorAll('.btn-primary');
+        const deleteForms = document.querySelectorAll('.delete-event-form');
 
-        showParticipantsButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const eventId = this.getAttribute('data-event-id');
-                const url = `/events/${eventId}/participants`;
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-                fetch(url)
-                    .then(response => response.text())
-                    .then(html => {
-                        // Parse la réponse HTML pour extraire uniquement les données nécessaires
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const participantsList = doc.querySelectorAll('li'); // Adapte selon la vue `participants`
-                        const modalList = document.getElementById('participantsList');
-                        modalList.innerHTML = ""; // Réinitialiser la liste
-                        participantsList.forEach(li => {
-                            modalList.appendChild(li);
-                        });
+                const confirmed = confirm('Are you sure you want to delete this event?');
+                if (confirmed) {
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
                     })
-                    .catch(error => console.error('Erreur:', error));
+                        .then(response => {
+                            if (response.ok) {
+                                // Afficher le message de succès
+                                const successMessage = document.getElementById('success-message');
+                                successMessage.style.display = 'block';
+
+                                // Supprimer l'événement du DOM
+                                const eventCard = form.closest('.col');
+                                eventCard.remove();
+
+                                // Vérifier s'il reste des événements
+                                const eventsContainer = document.querySelector('.row');
+                                if (!eventsContainer || eventsContainer.children.length === 0) {
+                                    // Afficher le message "No events found"
+                                    const noEventsMessage = document.createElement('div');
+                                    noEventsMessage.classList.add('text-center');
+                                    noEventsMessage.innerHTML = '<p class="text-muted">No events found for this organizer.</p>';
+                                    eventsContainer.parentElement.appendChild(noEventsMessage);
+                                }
+
+                                // Masquer le message de succès après 3 secondes
+                                setTimeout(() => {
+                                    successMessage.style.display = 'none';
+                                }, 3000);
+                            } else {
+                                alert('Failed to delete the event. Please try again.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('An error occurred. Please try again.');
+                        });
+                }
             });
         });
     });
-</script>
 
+</script>
 </body>
 </html>

@@ -24,6 +24,9 @@ public class Event {
     private String duration;
     private String category;
     private int places;
+    private double price;
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<Evaluation> evaluation = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organizer_id")
@@ -31,10 +34,21 @@ public class Event {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "event_participants", // Nom de la table intermédiaire
-            joinColumns = @JoinColumn(name = "event_id"), // Colonne pour `Event`
-            inverseJoinColumns = @JoinColumn(name = "user_id") // Colonne pour `UserApp`
+            name = "event_participants",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<UserApp> participants = new ArrayList<>();
+
+    public double calculateAverageRating(){
+        if(evaluation == null || evaluation.isEmpty()){
+            return 0.0;
+        }
+        int total=0;
+        for(Evaluation e: evaluation){
+            total+=e.getRate();
+        }
+        return (double) total/evaluation.size();
+    }
 
 }

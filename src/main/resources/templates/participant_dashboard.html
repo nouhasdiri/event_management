@@ -3,68 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Events List</title>
     <style>
-        /* Styles pour organiser les blocs */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://i.pinimg.com/736x/5e/02/71/5e0271f304ab1ebed1d0762e698331fc.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(21,8,31, 0.5);
+            padding: 15px 30px; /* Ajout d'un padding de 30px à gauche et à droite */
+            display: flex;
+            gap: 1080px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Logo en texte */
+        .logo {
+            font-size: 2rem; /* Taille du texte du logo */
+            font-weight: bold;
+            color: #ff00ff; /* Couleur du texte du logo */
+            font-family: "Poppins", sans-serif;
+            letter-spacing: 2px; /* Espacement entre les lettres */
+        }
+
+        .logo span{
+            font-size: 2rem;
+            color: white;
+            font-family: "Arabic Typesetting", sans-serif;
+        }
+
+        /* Liens de la navbar */
+        .navbar-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: #ff99ff;
+        }
+
+        .custom-heading {
+            margin-top: 50px;
+            font-family: 'Georgia', serif; /* Exemple de police avec empattements */
+            font-size: 2rem; /* Modifier la taille si nécessaire */
+            color: #ff00ff; /* Modifier la couleur */
+        }
+
         .event-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            padding: 20px;
         }
         .event-card {
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 15px;
-            width: 300px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #f9f9f9;
+            padding: 20px;
+            width: 320px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         .event-card h2 {
             font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #333;
+            margin-bottom: 15px;
+            color: #343a40;
         }
         .event-card p {
-            margin: 5px 0;
+            margin: 8px 0;
             font-size: 0.95em;
-            color: #555;
+            color: #6c757d;
         }
         .event-card .event-date {
             font-weight: bold;
-            color: #007BFF;
+            color: #007bff;
         }
+        .event-card form button {
+            background-color: #007bff;
+            border: none;
+            padding: 8px 15px;
+            color: white;
+            font-size: 0.95em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .event-card form button:hover {
+            background-color: #0056b3;
+        }
+
+        .no-events {
+            text-align: center;
+            font-size: 1.2em;
+            color: #6c757d;
+            padding: 20px;
+        }
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .rating input:checked ~ label,
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #FFD700; /* Couleur dorée */
+        }
+
+        a{
+            text-decoration: none; /* Supprime le soulignement */
+            color: inherit;
+        }
+
+        .error-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f44336;  /* Couleur rouge pour l'erreur */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
     </style>
 </head>
 <body>
-<h1>Events</h1>
-
-<!-- Si la liste des événements est vide -->
-<div th:if="${events.size() == 0}">
-    <p>No events available.</p>
-</div>
-
-<!-- Conteneur des événements -->
-<div class="event-container" th:if="${events.size() > 0}">
-    <!-- Boucle pour chaque événement -->
-    <div class="event-card" th:each="event : ${events}">
-        <h2 th:text="${event.eventName}">Event Name</h2>
-        <p><strong>Description:</strong> <span th:text="${event.description}">Event Description</span></p>
-        <p><strong>Location:</strong> <span th:text="${event.location}">Event Location</span></p>
-        <p><strong>Date:</strong> <span th:text="${#dates.format(event.date, 'yyyy-MM-dd HH:mm')}" class="event-date">Event Date</span></p>
-        <p><strong>Duration:</strong> <span th:text="${event.duration}">Event Duration</span></p>
-        <p><strong>Category:</strong> <span th:text="${event.category}">Event Category</span></p>
-        <p><strong>Available Places:</strong> <span th:text="${event.places}">Event Places</span></p>
-        <p><strong>Organizer:</strong> <span th:text="${event.organizer.username}">Organizer Name</span></p>
-        <p><strong>Participants:</strong></p>
-        <ul>
-            <li th:each="participant : ${event.participants}" th:text="${participant.email}">participant</li>
-        </ul>
-        <form action="/participate" method="post">
-            <input type="number" id="id_event" name="id_event" th:value="${event.id}" hidden readonly >
-            <button type="submit">Participate</button>
-        </form>
+<nav>
+    <div class="logo">
+        <a href="/">
+          Connect<span>Now</span>
+        </a>
     </div>
+    <div class="navbar-links">
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 class="text-center mb-4 custom-heading">Hello <span th:text="${username}">username</span></h2>
+    <div class="text-center mb-3">
+        <a href="/events" class="btn btn-primary">My Events</a>
+    </div>
+
+    <!-- Si la liste des événements est vide -->
+    <div class="no-events" th:if="${eventsWithRates.size() == 0}">
+        <p>No events available.</p>
+    </div>
+
+    <!-- Conteneur des événements -->
+    <div class="event-container" th:if="${eventsWithRates.size() > 0}">
+        <!-- Boucle pour chaque événement -->
+        <div class="event-card" th:each="eventWithRate : ${eventsWithRates}">
+            <h2 th:text="${eventWithRate.event.eventName}">Name</h2>
+            <p><strong>Description:</strong> <span th:text="${eventWithRate.event.description}">Event Description</span></p>
+            <p><strong>Location:</strong> <span th:text="${eventWithRate.event.location}">Event Location</span></p>
+            <p><strong>Date:</strong> <span th:text="${#dates.format(eventWithRate.event.date, 'yyyy-MM-dd HH:mm')}" class="event-date">Event Date</span></p>
+            <p><strong>Duration:</strong> <span th:text="${eventWithRate.event.duration}">Event Duration</span></p>
+            <p><strong>Category:</strong> <span th:text="${eventWithRate.event.category}">Event Category</span></p>
+            <p><strong>Available Places:</strong> <span th:text="${eventWithRate.event.places}">Event Places</span></p>
+            <p><strong>Organizer:</strong> <span th:text="${eventWithRate.event.organizer.username}">Organizer Name</span></p>
+            <form action="/participate" method="post">
+                <input type="number" id="id_event" name="id_event" th:value="${eventWithRate.event.id}" hidden readonly>
+                <button type="submit">Participate</button>
+            </form>
+            <!-- Formulaire pour évaluer avec étoiles -->
+            <!-- Formulaire pour évaluer avec étoiles -->
+            <form action="/rate-event" method="post">
+                <input type="number" id="id" name="id" th:value="${eventWithRate.event.id}" hidden>
+
+                <div class="rating">
+                    <input type="radio" id="star5-${eventWithRate.event.id}" name="rate" value="5" th:checked="${eventWithRate.rate == 5}" onchange="this.form.submit()">
+                    <label for="star5-${eventWithRate.event.id}">&#9733;</label>
+
+                    <input type="radio" id="star4-${eventWithRate.event.id}" name="rate" value="4" th:checked="${eventWithRate.rate == 4}" onchange="this.form.submit()">
+                    <label for="star4-${eventWithRate.event.id}">&#9733;</label>
+
+                    <input type="radio" id="star3-${eventWithRate.event.id}" name="rate" value="3" th:checked="${eventWithRate.rate == 3}" onchange="this.form.submit()">
+                    <label for="star3-${eventWithRate.event.id}">&#9733;</label>
+
+                    <input type="radio" id="star2-${eventWithRate.event.id}" name="rate" value="2" th:checked="${eventWithRate.rate == 2}" onchange="this.form.submit()">
+                    <label for="star2-${eventWithRate.event.id}">&#9733;</label>
+
+                    <input type="radio" id="star1-${eventWithRate.event.id}" name="rate" value="1" th:checked="${eventWithRate.rate == 1}" onchange="this.form.submit()">
+                    <label for="star1-${eventWithRate.event.id}">&#9733;</label>
+                </div>
+            </form>
+
+            <!--<button id="pay-button">Payer</button>
+            <div id="payment-form" style="display:none;">
+                <form id="payment-form-element">
+                    <div id="card-element"></div>
+                    <button id="submit-button">Payer</button>
+                    <div id="payment-result"></div>
+                </form>
+            </div>
+            -->
+
+        </div>
+    </div>
+
+    <div th:if="${errorMessage}" class="error-message" style="display: none;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+
+
 </div>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe('YOUR_PUBLIC_STRIPE_KEY'); // Remplacez par votre clé publique Stripe
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    document.getElementById('pay-button').addEventListener('click', function() {
+        document.getElementById('payment-form').style.display = 'block';
+    });
+
+    document.getElementById('payment-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const { clientSecret } = await fetch('/api/payment/create-payment-intent?amount=100', {
+            method: 'POST',
+        }).then((r) => r.json());
+
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardElement,
+            }
+        });
+
+        if (error) {
+            document.getElementById('payment-result').innerText = error.message;
+        } else {
+            document.getElementById('payment-result').innerText = 'Paiement réussi !';
+        }
+    });
+</script>
+<script>
+    // Vérifier si un message d'erreur existe
+    const errorMessageElement = document.querySelector('.error-message');
+
+    if (errorMessageElement) {
+        // Afficher le message d'erreur
+        errorMessageElement.style.display = 'block';
+
+        // Cacher le message après 3 secondes
+        setTimeout(function() {
+            errorMessageElement.style.display = 'none';
+        }, 5000);  // Délai de 3 secondes (3000 ms)
+    }
+</script>
 </body>
 </html>

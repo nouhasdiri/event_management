@@ -66,14 +66,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(httpForm -> {
                     httpForm.loginPage("/req/login").permitAll();
-                    // Utilisation de votre CustomAuthenticationSuccessHandler
                     httpForm.successHandler(new CustomAuthenticationSuccessHandler());
                 })
                 .logout(logout -> {
-                    logout.logoutUrl("/logout") // URL pour se déconnecter
-                            .logoutSuccessUrl("/req/login?logout") // URL après la déconnexion réussie
-                            .invalidateHttpSession(true) // Invalide la session HTTP
-                            .deleteCookies("JSESSIONID") // Supprime le cookie de session
+                    logout.logoutUrl("/logout")
+                            .logoutSuccessUrl("/req/login?logout")
+                            .invalidateHttpSession(true)
+                            .deleteCookies("JSESSIONID")
                             .permitAll();
                 })
                 .authorizeHttpRequests(registry -> {

@@ -21,7 +21,7 @@ import java.util.Set;
 public class UserApp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long id;
+    private long id;
     private String username;
     private String email;
     private String password;
